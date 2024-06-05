@@ -38,3 +38,9 @@ vault write auth/kubernetes/role/consul \
      bound_service_account_namespaces=consul \
      token_policies=consul-ca \
      ttl=24h
+
+vault write auth/kubernetes/role/consul-test \
+     bound_service_account_names=consul-server-test \
+     bound_service_account_namespaces=consul \
+     token_policies=consul-ca \
+     ttl=24h

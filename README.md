@@ -68,8 +68,6 @@ First lets create the policy
 sh setup-vault-auth.sh
 ```
 
-TODO
-
 # Consul
 
 ## Observability Suite *(optional)*
@@ -89,11 +87,6 @@ helm repo add hashicorp https://helm.releases.hashicorp.com
 brew upgrade
 brew upgrade --cask
 ```
-
-## Edit Consul Config File
-We will use the Helm chart to install Consul, this is highly customisable using Helm configuration values. Each value has a reasonable default tuned for an optimal getting started experience with Consul, more details can be found [here](https://developer.hashicorp.com/consul/docs/k8s/helm)
-
-TODO
 
 ## Setup Consul
 ```bash

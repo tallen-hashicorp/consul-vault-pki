@@ -23,6 +23,16 @@ global:
     enableAgentMetrics: true
     # Configures the retention time for metrics in Consul servers and clients.
     agentMetricsRetentionTime: "1m"
+  secretsBackend:
+    vault:
+      consulServerRole: consul
+      consulClientRole: consul
+      consulCARole: consul
+      connectCA:
+        address: vault.default.svc.cluster.local
+        authMethodPath: kubernetes
+        rootPKIPath: pki
+        intermediatePKIPath: pki_int
 # Configures values that configure the Consul server cluster.
 server:
   enabled: true

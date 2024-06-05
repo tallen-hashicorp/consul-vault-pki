@@ -5,7 +5,7 @@ metadata:
   labels:
     app: ubuntu
 spec:
-  serviceAccountName: consul-server
+  serviceAccountName: consul-server-test
   containers:
     - name: ubuntu
       image: ubuntu:latest

@@ -34,7 +34,7 @@ apt install curl
 
 Send a POST request to authenticate with Vault using the Kubernetes token.
 ```bash
-curl --request POST --data '{"jwt": "'"$KUBE_TOKEN"'", "role": "consul"}' $VAULT_ADDR/v1/auth/kubernetes/login
+curl --request POST --data '{"jwt": "'"$KUBE_TOKEN"'", "role": "consul-test"}' $VAULT_ADDR/v1/auth/kubernetes/login
 ```
 
 ## Install Vault on Ubuntu Pod
@@ -56,7 +56,7 @@ apt install vault
 
 Authenticate with Vault using the previously retrieved Kubernetes token.
 ```bash
-vault write auth/kubernetes/login role=consul jwt=$KUBE_TOKEN
+vault write auth/kubernetes/login role=consul-test jwt=$KUBE_TOKEN
 ```
 
 ## Clean up 
