@@ -2,10 +2,17 @@
 Consul running in K8s using Vault PKI as a CA
 
 # Vault
-First run vault in Dev mode, we will connect consul to this later
+For this example, we will be using a locally running Vault instance in Dev mode. However, any Vault instance can be used. For production environments, it is recommended to use a production-ready Vault instance or HCP Dedicated Vault. The script below will create a PKI root and intermediate CA with a common name of `consul.local`. We will expect `server.consul.local` to be the domain for our Consul server. In a production setup, you should configure your PKI to match your organization’s normal structure. More details can be found [here](https://developer.hashicorp.com/vault/docs/secrets/pki).
+
+## Run Vault
+
+Lets run vault in Dev mode, we will connect consul to this later
+
 ```bash
 vault server -dev -dev-root-token-id root
 ```
+
+## Setup Vault PKI
 
 Now in a different terminal, run the setup script. This will log you into Vault, enable the PKI secrets engine, generate and configure a root CA, create an intermediate CA, define a role for issuing certificates, and finally request a certificate for a specified common name. This setup ensures a complete PKI infrastructure in Vault, allowing you to manage and issue certificates securely.
 ```bash
@@ -35,5 +42,58 @@ By adding the root CA certificate to your Keychain, you establish trust for cert
 
 You typically don't need to add the intermediate CA certificate separately to your trust store unless you have specific use cases that require it. The intermediate CA certificate is used by the system to validate certificates issued by the intermediate CA, but trust is ultimately established through the root CA certificate.
 
+## Setup Vault Auth methods
+Now we need to setup some Auth Methods in Vault for Consul to use to access Vaults PKI Secrets Engine. 
+
+First lets create the policy
+```bash
+export VAULT_ADDR='http://127.0.0.1:8200'
+vault login root
+vault policy write consul-ca vault/vault-policy-consul-ca.hcl
+```
+
+TODO
+
 # Consul
 
+## Observability Suite *(optional)*
+First we'll setup the Observability Suite this includes Prometheus, and Grafana, these are not required but are nice to have tools for monitoring Consul environments. To configure this run the following
+
+```bash
+sh install-observability-suite.sh
+```
+
+## Install Consul
+To install Consul, follow the steps below. This will set up the necessary tools and repositories, ensuring your environment is ready for Consul's deployment and management on Kubernetes.
+
+```bash
+brew tap hashicorp/tap
+brew install hashicorp/tap/consul-k8s
+helm repo add hashicorp https://helm.releases.hashicorp.com
+brew upgrade
+brew upgrade --cask
+```
+
+## Edit Consul Config File
+We will use the Helm chart to install Consul, this is highly customisable using Helm configuration values. Each value has a reasonable default tuned for an optimal getting started experience with Consul, more details can be found [here](https://developer.hashicorp.com/consul/docs/k8s/helm)
+
+TODO
+
+## Setup Consul
+```bash
+consul-k8s install -f config.yaml
+```
+
+## Access Consul
+TODO
+
+# See Also
+* [PKI secrets engine](https://developer.hashicorp.com/vault/docs/secrets/pki)
+* [Consul Helm Chart Reference](https://developer.hashicorp.com/consul/docs/k8s/helm)
+* [Vault as Consul service mesh certification authority](https://developer.hashicorp.com/consul/tutorials/operate-consul/vault-pki-consul-connect-ca)
+* [Generate mTLS Certificates for Consul with Vault](https://developer.hashicorp.com/consul/tutorials/operate-consul/vault-pki-consul-secure-tls?productSlug=consul&tutorialSlug=vault-secure&tutorialSlug=vault-pki-consul-secure-tls)
+
+# Further Reading
+* [What Is Public Key Infrastructure (PKI)? - Video](https://youtu.be/uVaUgrxjMe0?feature=shared)
+* [What Is An SSL/TLS Certificate?](https://aws.amazon.com/what-is/ssl-certificate/)
+* [SSL/TLS Explained in 7 Minutes - Video](https://youtu.be/67Kfsmy_frM?feature=shared)
