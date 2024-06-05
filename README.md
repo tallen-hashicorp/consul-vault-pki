@@ -98,3 +98,6 @@ TODO
 * [What Is Public Key Infrastructure (PKI)? - Video](https://youtu.be/uVaUgrxjMe0?feature=shared)
 * [What Is An SSL/TLS Certificate?](https://aws.amazon.com/what-is/ssl-certificate/)
 * [SSL/TLS Explained in 7 Minutes - Video](https://youtu.be/67Kfsmy_frM?feature=shared)
+
+# TODO
+[] Add Vault mTLS [guide](https://developer.hashicorp.com/consul/tutorials/operate-consul/vault-pki-consul-secure-tls?productSlug=consul&tutorialSlug=vault-secure&tutorialSlug=vault-pki-consul-secure-tls)
