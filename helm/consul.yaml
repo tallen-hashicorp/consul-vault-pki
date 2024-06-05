@@ -25,6 +25,7 @@ global:
     agentMetricsRetentionTime: "1m"
   secretsBackend:
     vault:
+      enabled: true
       consulServerRole: consul
       consulClientRole: consul
       consulCARole: consul

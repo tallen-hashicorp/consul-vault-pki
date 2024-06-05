@@ -9,7 +9,7 @@ echo "Step 1: generate root CA"
 vault secrets enable pki
 vault secrets tune -max-lease-ttl=87600h pki
 vault write -field=certificate pki/root/generate/internal \
-     common_name="consul.local" \
+     common_name="dc1.consul" \
      issuer_name="root-2023" \
      ttl=87600h > root_2023_ca.crt
 vault read pki/issuer/$(vault list -format=json pki/issuers/ | jq -r '.[]') \
@@ -24,8 +24,8 @@ echo "Step 2: generate intermediate CA"
 vault secrets enable -path=pki_int pki
 vault secrets tune -max-lease-ttl=43800h pki_int
 vault write -format=json pki_int/intermediate/generate/internal \
-     common_name="consul.local Intermediate Authority" \
-     issuer_name="consul-dot-local-intermediate" \
+     common_name="dc1.consul Intermediate Authority" \
+     issuer_name="dc-dot-consul-intermediate" \
      | jq -r '.data.csr' > pki_intermediate.csr
 vault write -format=json pki/root/sign-intermediate \
      issuer_ref="root-2023" \
@@ -35,11 +35,11 @@ vault write -format=json pki/root/sign-intermediate \
 vault write pki_int/intermediate/set-signed certificate=@intermediate.cert.pem
 
 echo "Step 3: create a role"
-vault write pki_int/roles/consul-dot-local \
+vault write pki_int/roles/dc1-dot-consul \
      issuer_ref="$(vault read -field=default pki_int/config/issuers)" \
-     allowed_domains="consul.local" \
+     allowed_domains="dc1.consul" \
      allow_subdomains=true \
      max_ttl="720h"
 
 echo "Step 4: request certificates"
-vault write pki_int/issue/consul-dot-local common_name="server.consul.local" ttl="24h"
+vault write pki_int/issue/dc1-dot-consul common_name="server.dc1.consul" ttl="24h"
