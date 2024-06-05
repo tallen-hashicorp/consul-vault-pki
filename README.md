@@ -94,7 +94,12 @@ consul-k8s install -f helm/consul.yaml
 ```
 
 ## Access Consul
-TODO
+Setup a port forward from local host 8081 to the consul-ui service on port 443
+```bash
+kubectl -n consul port-forward service/consul-ui 8081:443
+```
+
+then you should be able to access the consul ui via [https://127.0.0.1:8081](https://127.0.0.1:8081)
 
 # See Also
 * [PKI secrets engine](https://developer.hashicorp.com/vault/docs/secrets/pki)
