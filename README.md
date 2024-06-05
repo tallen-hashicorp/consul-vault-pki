@@ -35,5 +35,5 @@ By adding the root CA certificate to your Keychain, you establish trust for cert
 
 You typically don't need to add the intermediate CA certificate separately to your trust store unless you have specific use cases that require it. The intermediate CA certificate is used by the system to validate certificates issued by the intermediate CA, but trust is ultimately established through the root CA certificate.
 
-
 # Consul
+
