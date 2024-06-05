@@ -19,7 +19,7 @@ Now in a different terminal, run the setup script. This will log you into Vault,
 sh setup-vault-pki.sh
 ```
 
-this creates 4 files:
+this creates 3 cert files:
 
 1. **pki_intermediate.csr**:
    - This file contains a Certificate Signing Request (CSR) for the intermediate CA. A CSR is a message sent from an applicant to a Certificate Authority, requesting a new certificate. It includes information such as the applicant's distinguished name, public key, and desired attributes of the certificate. In this script, `pki_intermediate.csr` is generated to request the signing of the intermediate CA certificate by the root CA.
