@@ -1,15 +1,33 @@
-# consul-vault-pki
+# Consul Vault PKI
 Consul running in K8s using Vault PKI as a CA
 
+# Prerequisites
+
+Before you begin, ensure you have the following prerequisites set up:
+
+- **Kubernetes Cluster**: You need a running Kubernetes cluster. In this example, we are using Kubernetes with Docker Desktop, but any Kubernetes distribution should work.
+  - For setting up Kubernetes with Docker Desktop, refer to the [Docker Desktop documentation](https://docs.docker.com/desktop/kubernetes/).
+
+- **Helm**: Make sure Helm is installed on your machine for managing Kubernetes applications.
+  - Installation instructions can be found [here](https://helm.sh/docs/intro/install/).
+
+- **kubectl**: The Kubernetes command-line tool, `kubectl`, should be installed and configured to communicate with your cluster.
+  - Installation guide is available [here](https://kubernetes.io/docs/tasks/tools/).
+
+- **Homebrew**: Ensure Homebrew is installed for managing software packages.
+  - Installation instructions are available [here](https://brew.sh/).
+
+
 # Vault
-For this example, we will be using a locally running Vault instance in Dev mode. However, any Vault instance can be used. For production environments, it is recommended to use a production-ready Vault instance or HCP Dedicated Vault. The script below will create a PKI root and intermediate CA with a common name of `consul.local`. We will expect `server.consul.local` to be the domain for our Consul server. In a production setup, you should configure your PKI to match your organization’s normal structure. More details can be found [here](https://developer.hashicorp.com/vault/docs/secrets/pki).
+For this example, we will be using a locally running Vault instance in Dev mode running on K8s. However, any Vault instance can be used. For production environments, it is recommended to use a production-ready Vault instance or HCP Dedicated Vault. The script below will create a PKI root and intermediate CA with a common name of `consul.local`. We will expect `server.consul.local` to be the domain for our Consul server. In a production setup, you should configure your PKI to match your organization’s normal structure. More details can be found [here](https://developer.hashicorp.com/vault/docs/secrets/pki).
 
 ## Run Vault
 
 Lets run vault in Dev mode, we will connect consul to this later
 
 ```bash
-vault server -dev -dev-root-token-id root
+kubectl apply -f vault/0-vault.yaml 
+kubectl port-forward services/vault 8200 8200
 ```
 
 ## Setup Vault PKI
@@ -47,9 +65,7 @@ Now we need to setup some Auth Methods in Vault for Consul to use to access Vaul
 
 First lets create the policy
 ```bash
-export VAULT_ADDR='http://127.0.0.1:8200'
-vault login root
-vault policy write consul-ca vault/vault-policy-consul-ca.hcl
+sh setup-vault-auth.sh
 ```
 
 TODO
@@ -81,7 +97,7 @@ TODO
 
 ## Setup Consul
 ```bash
-consul-k8s install -f config.yaml
+consul-k8s install -f helm/consul.yaml
 ```
 
 ## Access Consul
