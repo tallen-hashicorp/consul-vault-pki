@@ -90,6 +90,7 @@ TODO
 # See Also
 * [PKI secrets engine](https://developer.hashicorp.com/vault/docs/secrets/pki)
 * [Consul Helm Chart Reference](https://developer.hashicorp.com/consul/docs/k8s/helm)
+* [Consul Helm Chart Reference - Vault CA](https://developer.hashicorp.com/consul/docs/k8s/helm#v-global-secretsbackend-vault-connectca)
 * [Vault as Consul service mesh certification authority](https://developer.hashicorp.com/consul/tutorials/operate-consul/vault-pki-consul-connect-ca)
 * [Generate mTLS Certificates for Consul with Vault](https://developer.hashicorp.com/consul/tutorials/operate-consul/vault-pki-consul-secure-tls?productSlug=consul&tutorialSlug=vault-secure&tutorialSlug=vault-pki-consul-secure-tls)
 
