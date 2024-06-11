@@ -24,6 +24,9 @@ global:
     bootstrapToken:
       secretName: consul-partitions-acl-token
       secretKey: token
+  gossipEncryption:
+    secretName: consul/data/secrets/gossip 
+    secretKey: key
   # Exposes Prometheus metrics for the Consul service mesh and sidecars.
   metrics:
     enabled: true

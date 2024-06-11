@@ -2,6 +2,9 @@
 export VAULT_ADDR='http://127.0.0.1:8200'
 vault login root
 
+vault secrets enable -path=consul kv-v2
+vault kv put consul/secrets/gossip key=$(consul keygen)
+
 vault policy write consul-ca vault/vault-policy-consul-ca.hcl
 
 kubectl apply -f k8s/vault-auth-service-account.yaml

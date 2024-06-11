@@ -29,3 +29,7 @@ path "auth/token/renew-self" {
 path "auth/token/lookup-self" {
   capabilities = [ "read" ]
 }
+
+path "consul/*" {
+  capabilities = [ "read" ]
+}
