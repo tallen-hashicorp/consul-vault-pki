@@ -9,6 +9,8 @@ global:
   image: hashicorp/consul:1.16.0
   # The name of the datacenter that the agents should register as.
   datacenter: dc1
+  # The default log level to apply to all components which do not otherwise override this setting
+  logLevel: debug
   # Enables TLS across the cluster to verify authenticity of the Consul servers and clients.
   tls:
     enabled: true

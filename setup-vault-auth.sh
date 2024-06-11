@@ -44,3 +44,6 @@ vault write auth/kubernetes/role/consul-test \
      bound_service_account_namespaces=consul \
      token_policies=consul-ca \
      ttl=24h
+
+### Vault Audit Logging
+vault audit enable file file_path=/tmp/vault_audit.log
