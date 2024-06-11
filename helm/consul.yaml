@@ -22,11 +22,12 @@ global:
     # If true, automatically manage ACL tokens and policies for all Consul components.
     manageSystemACLs: true
     bootstrapToken:
-      secretName: consul-partitions-acl-token
+      secretName: consul/data/secret/bootstrap
       secretKey: token
   gossipEncryption:
-    secretName: consul/data/secrets/gossip 
-    secretKey: key
+    #autoGenerate: true
+    secretName: consul/data/secret/gossip
+    secretKey: gossip
   # Exposes Prometheus metrics for the Consul service mesh and sidecars.
   metrics:
     enabled: true
@@ -44,8 +45,8 @@ global:
       connectCA:
         address: vault.default.svc.cluster.local
         authMethodPath: kubernetes
-        rootPKIPath: pki
-        intermediatePKIPath: pki_int
+        rootPKIPath: pki/
+        intermediatePKIPath: pki_int/
 # Configures values that configure the Consul server cluster.
 server:
   enabled: true

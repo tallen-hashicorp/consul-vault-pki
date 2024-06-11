@@ -31,5 +31,5 @@ path "auth/token/lookup-self" {
 }
 
 path "consul/*" {
-  capabilities = [ "read" ]
+  capabilities = [ "create", "read", "update", "delete", "list" ]
 }

@@ -27,7 +27,7 @@ For this example, we will use a locally running Vault instance in Dev mode on Ku
 Let's run Vault in Dev mode; we will connect Consul to this later.
 
 ```bash
-kubectl apply -f vault/0-vault.yaml 
+kubectl apply -f vault/0-vault.yaml
 kubectl port-forward services/vault 8200:8200
 ```
 
