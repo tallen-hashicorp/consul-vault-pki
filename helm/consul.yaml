@@ -6,11 +6,11 @@ global:
   # The prefix used for all resources created in the Helm chart.
   name: consul
   # The consul image version.
-  image: hashicorp/consul:1.16.0
+  image: hashicorp/consul:1.19.0
   # The name of the datacenter that the agents should register as.
   datacenter: dc1
   # The default log level to apply to all components which do not otherwise override this setting
-  logLevel: debug
+  logLevel: trace
   # Enables TLS across the cluster to verify authenticity of the Consul servers and clients.
   tls:
     enabled: true
@@ -68,7 +68,7 @@ ui:
     baseURL: http://prometheus-server.default.svc.cluster.local
 # Configures and installs the automatic Consul Connect sidecar injector.
 connectInject:
-  enabled: true
+  enabled: false
     # Enables metrics for Consul Connect sidecars.
   metrics:
     defaultEnabled: true
