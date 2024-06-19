@@ -43,7 +43,7 @@ global:
       manageSystemACLsRole: consul
       consulCARole: consul
       connectCA:
-        address: vault.default.svc.cluster.local
+        address: http://vault.default.svc.cluster.local:8200
         authMethodPath: kubernetes
         rootPKIPath: pki/
         intermediatePKIPath: pki_int/
