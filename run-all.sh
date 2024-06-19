@@ -4,8 +4,12 @@
 kubectl apply -f vault/0-vault.yaml 
 
 # Wait for vault to start
-echo "Waiting for Vault to start..."
-sleep 10
+echo "Waiting for Vault pod to be ready..."
+while [[ $(kubectl get pods -l app=vault -o 'jsonpath={..status.conditions[?(@.type=="Ready")].status}') != "True" ]]; do
+    echo "Waiting for Vault pod to be ready..."
+    sleep 2
+done
+echo "Vault pod is ready."
 
 # Start port-forwarding for Vault in the background
 kubectl port-forward services/vault 8200:8200 &
